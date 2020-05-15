@@ -79,7 +79,7 @@ void main(void) {
  Init_Clock () ;
  
  j = 0 ;
- W_ref =  ;
+ W_ref = 0;
  estado = Prog1 ;
  ...
 
