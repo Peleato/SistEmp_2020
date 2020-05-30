@@ -53,10 +53,11 @@ unsigned char LeerEntrada(void) ;
 *                     VARIABLES GLOBALES                          *
 *******************************************************************/
 
-unsigned char marco = 0, num_marcos =  ;
-unsigned int siguiente, m =  ;
+unsigned char marco = 0, num_marcos = 4 ;
+unsigned int siguiente, m = 0;
 
-enum {Prog1, Prog2, ...} estado ;
+enum {Prog1, Prog2, Prog1_5, Prog1_4, Prog1_3,
+Prog1_2, Prog1_1, Prog2_4, Prog2_3,Prog2_2, Prog2_1} estado ;
 unsigned char Entrada ;
 
 float W, W_ref, U=0.0, E, E_ant = 0.0 ;
@@ -81,17 +82,13 @@ void main(void) {
  j = 0 ;
  W_ref = 0;
  estado = Prog1 ;
- ...
+ 
 
  siguiente = Get_Time () ;
-  
  while(1) {
- 
-    marco = (marco % num_marcos)+1 ;
+    marco = (marco % num_marcos)+1 
     switch (marco) {
       case 1: Visualizacion(); Control_Discreto(); Control_Motor(); break;
-      ...
-
     }
     
     siguiente += m ;
@@ -131,8 +128,8 @@ void Control_Motor (void) {
    buffer[j] = W ;  
    j = (j + 1)%150 ;
 
-   ...
-   
+   E = W_ref - W;
+   U = U + 0,572*E -0.286*E_ant;
    Set_U (U) ;
    
    E_ant = E ;
@@ -157,18 +154,101 @@ void Control_Discreto (void) {
   switch(estado){
      case Prog1: 
         if(Entrada & M) {
-          estado=...;
-          Set_Timer (...,0) ;
-          W_ref = ... ;
-          Paso = ... ;
-        } else if (...) {
-          estado = ... ;
-          Programa = ... ;
+          estado = Prog1_5;
+          Set_Timer (4000,0);
+          W_ref = 1;
+          Paso = 5;
+        } 
+        else if(Entrada & S2){
+          estado = Prog2;
+          Programa = 2;
         }
         break;
-                    
-    case 
-    }
+      case Prog2:
+        if(Entrada & M) {
+            estado = Prog2_4;
+            Set_Timer (2000,0) ;
+            W_ref = -0.5;
+            Paso = 5;
+        } 
+        else if(Entrada & S1){
+            estado = Prog1;
+            Programa = 1;
+        }
+        break;
+      //Programa 1
+      case Prog1_5:
+        if(Time_Out()){
+          Set_Timer(4000,0);
+          W_ref = -1;
+          Paso = 4;  
+          estado = Prog1_4;
+        }
+        break;
+      case Prog1_4:
+        if(Time_Out()){
+          Set_Timer(4000,0);
+          W_ref = 1;
+          Paso = 3;  
+          estado = Prog1_3;
+        }
+        break;
+      case Prog1_3:
+        if(Time_Out()){
+          Set_Timer(4000,0);
+          W_ref = 0;
+          Paso = 2;  
+          estado = Prog1_2;
+        }
+        break;
+      case Prog1_2:
+        if(Time_Out()){
+          Set_Timer(10000,0);
+          W_ref = 3;
+          Paso = 1;  
+          estado = Prog1_1;
+        }
+        break;
+      case Prog1_1:
+        if(Time_Out()){
+          W_ref = 0;
+          Paso = 0;  
+          estado = Prog1;
+        }
+        break;
+       //Programa 2
+       case Prog2_4:
+        if(Time_Out()){
+          Set_Timer(4000,0);
+          W_ref = 1;
+          Paso = 3;  
+          estado = Prog2_3;
+        }
+        break;
+      case Prog2_3:
+        if(Time_Out()){
+          Set_Timer(2000,0);
+          W_ref = 0;
+          Paso = 2;  
+          estado = Prog2_2;
+        }
+        break;
+      case Prog2_2:
+        if(Time_Out()){
+          Set_Timer(6000,0);
+          W_ref = 2;
+          Paso = 1;  
+          estado = Prog2_1;
+        }
+        break;
+      case Prog2_1:
+        if(Time_Out()){
+          W_ref = 0;
+          Paso = 0;  
+          estado = Prog2;
+        }
+        break; 
+  }
 }
 
 /******************************************************************/
