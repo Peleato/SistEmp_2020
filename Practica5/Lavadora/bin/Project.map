@@ -26,18 +26,19 @@ Entry point: 0xC07B (_Startup)
 _startupData is allocated at 0xC084 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x100     650
-  _Copy    *toCopyDownBeg 0xC652
+  _Range   pZeroOut       0x100     658
+  _Copy    *toCopyDownBeg 0xC8AC
 } _startupData;
 
 *********************************************************************************************
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
+.data                              5   R/W      0x100      0x104   RAM
 .init                            132     R     0xC000     0xC083   ROM
 .startData                        14     R     0xC084     0xC091   ROM
-.text                           1472     R     0xC092     0xC651   ROM
-.copy                              2     R     0xC652     0xC653   ROM
+.text                           2074     R     0xC092     0xC8AB   ROM
+.copy                             11     R     0xC8AC     0xC8B6   ROM
 .abs_section_0                     1   N/I        0x0        0x0   .absSeg0
 .abs_section_1                     1   N/I        0x1        0x1   .absSeg1
 .abs_section_6                     1   N/I        0x6        0x6   .absSeg2
@@ -151,14 +152,14 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_1862                  2   N/I     0x1862     0x1863   .absSeg110
 .abs_section_1864                  2   N/I     0x1864     0x1865   .absSeg111
 .abs_section_fff2                  2     R     0xFFF2     0xFFF3   .absSeg112
-.bss                              31   R/W      0x100      0x11E   RAM
-.common                          619   R/W      0x11F      0x389   RAM
-.stack                           128   R/W      0x38A      0x409   RAM
+.bss                              34   R/W      0x105      0x126   RAM
+.common                          619   R/W      0x127      0x391   RAM
+.stack                           128   R/W      0x392      0x411   RAM
 .vectSeg113_vect                   2     R     0xFFFE     0xFFFF   .vectSeg113
 
 Summary of section sizes per section type:
-READ_ONLY (R):         658 (dec:     1624)
-READ_WRITE (R/W):      30A (dec:      778)
+READ_ONLY (R):         8BB (dec:     2235)
+READ_WRITE (R/W):      312 (dec:      786)
 NO_INIT (N/I):          85 (dec:      133)
 
 *********************************************************************************************
@@ -180,24 +181,25 @@ MODULE:                 -- RTSHC08.C.o (ansifs.lib) --
      _SPLITSIGN                                C14A      1C      28       1   .text       
      _IMODS_STAR08                             C166      25      37       1   .text       
      _COPY                                     C18B      30      48       2   .text       
-     _POP32                                    C1BB      1A      26       2   .text       
-     F_CLRK                                    C1D5       6       6       2   .text       
-     F_NANK                                    C1DB       6       6       2   .text       
-     F_INFK                                    C1E1       6       6       2   .text       
-     F_TLK                                     C1E7      1E      30       2   .text       
-     F_XGKL                                    C205      48      72       1   .text       
-     _UNPACK_k_to_K                            C24D      58      88       2   .text       
-     _UNPACK_j_to_L                            C2A5      58      88       2   .text       
-     _PACK_K_to_k                              C2FD      4F      79       2   .text       
-     F_NORMK                                   C34C      43      67       2   .text       
-     _FADD_K_is_K_plus_L                       C38F      B2     178       1   .text       
-     _FMUL_K_is_K_times_L                      C441      90     144       1   .text       
-     _FADD_Common                              C4D1       F      15       2   .text       
-     _FSUB_Common                              C4E0       9       9       1   .text       
-     _FMUL_Common                              C4E9       F      15       1   .text       
-     _FADD                                     C4F8       7       7       1   .text       
-     _FSUB                                     C4FF       7       7       1   .text       
-     _FMUL_RC                                  C506       7       7       2   .text       
+     _POP32                                    C1BB      1A      26       3   .text       
+     _Jump_Table_Header_Offset                 C1D5      24      36       2   .text       
+     F_CLRK                                    C1F9       6       6       2   .text       
+     F_NANK                                    C1FF       6       6       2   .text       
+     F_INFK                                    C205       6       6       2   .text       
+     F_TLK                                     C20B      1E      30       2   .text       
+     F_XGKL                                    C229      48      72       1   .text       
+     _UNPACK_k_to_K                            C271      58      88       2   .text       
+     _UNPACK_j_to_L                            C2C9      58      88       2   .text       
+     _PACK_K_to_k                              C321      4F      79       2   .text       
+     F_NORMK                                   C370      43      67       2   .text       
+     _FADD_K_is_K_plus_L                       C3B3      B2     178       1   .text       
+     _FMUL_K_is_K_times_L                      C465      90     144       1   .text       
+     _FADD_Common                              C4F5       F      15       2   .text       
+     _FSUB_Common                              C504       9       9       1   .text       
+     _FMUL_Common                              C50D       F      15       1   .text       
+     _FADD                                     C51C       7       7       2   .text       
+     _FSUB                                     C523       7       7       2   .text       
+     _FMUL_RC                                  C52A       7       7       4   .text       
 - VARIABLES:
 MODULE:                 -- MC9S08SV16.C.o --
 - PROCEDURES:
@@ -224,7 +226,7 @@ MODULE:                 -- MC9S08SV16.C.o --
      _TPM1C3SC                                   2E       1       1       0   .abs_section_2e
      _TPM1C4SC                                   31       1       1       0   .abs_section_31
      _TPM1C5SC                                   34       1       1       0   .abs_section_34
-     _PTAD                                       38       1       1       0   .abs_section_38
+     _PTAD                                       38       1       1       1   .abs_section_38
      _PTADD                                      39       1       1       0   .abs_section_39
      _PTBD                                       3A       1       1       1   .abs_section_3a
      _PTBDD                                      3B       1       1       1   .abs_section_3b
@@ -272,8 +274,8 @@ MODULE:                 -- MC9S08SV16.C.o --
      _RTCSC                                    185C       1       1       0   .abs_section_185c
      _RTCCNT                                   185D       1       1       0   .abs_section_185d
      _RTCMOD                                   185E       1       1       0   .abs_section_185e
-     _MTIMSC                                   1860       1       1       2   .abs_section_1860
-     _MTIMCLK                                  1861       1       1       0   .abs_section_1861
+     _MTIMSC                                   1860       1       1       3   .abs_section_1860
+     _MTIMCLK                                  1861       1       1       4   .abs_section_1861
      _SPIC1                                    1868       1       1       0   .abs_section_1868
      _SPIC2                                    1869       1       1       0   .abs_section_1869
      _SPIBR                                    186A       1       1       0   .abs_section_186a
@@ -313,7 +315,7 @@ MODULE:                 -- MC9S08SV16.C.o --
      _DBGF                                     1814       2       2       0   .abs_section_1814
      _SCIBD                                    1850       2       2       0   .abs_section_1850
      _MTIMCNT                                  1862       2       2       0   .abs_section_1862
-     _MTIMMOD                                  1864       2       2       0   .abs_section_1864
+     _MTIMMOD                                  1864       2       2       1   .abs_section_1864
 MODULE:                 -- Start08.c.o --
 - PROCEDURES:
      loadByte                                  C000       E      14       5   .init       
@@ -322,67 +324,86 @@ MODULE:                 -- Start08.c.o --
 - VARIABLES:
      _startupData                              C084       6       6       4   .startData  
 - LABELS:
-     __SEG_END_SSTACK                           40A       0       0       1               
+     __SEG_END_SSTACK                           412       0       0       1               
 MODULE:                 -- clock.c.o --
 - PROCEDURES:
-     Tick                                      C50D      33      51       1   .text       
-     Get_Time                                  C540      10      16       1   .text       
+     Tick                                      C531      33      51       1   .text       
+     Init_Clock                                C564      2E      46       1   .text       
+     Get_Time                                  C592      10      16       2   .text       
+     delay_until                               C5A2      14      20       1   .text       
+     Set_Timer                                 C5B6      25      37       1   .text       
+     Time_Out                                  C5DB       4       4       1   .text       
 - VARIABLES:
-     TO                                         100       1       1       1   .bss        
-     Active_Timer                               101       1       1       2   .bss        
-     tick_counter                               102       2       2       4   .bss        
-     Timer                                      104       2       2       1   .bss        
+     TO                                         105       1       1       3   .bss        
+     Active_Timer                               106       1       1       3   .bss        
+     tick_counter                               107       2       2       6   .bss        
+     Timer                                      109       2       2       2   .bss        
      _Vector_6                                 FFF2       2       2       0   .abs_section_fff2
-     timer_function                             11F       2       2       1   .common     
+     timer_function                             127       2       2       2   .common     
 MODULE:                 -- motor.c.o --
 - PROCEDURES:
-     Set_U                                     C550      4B      75       1   .text       
-     Read_W                                    C59B       B      11       1   .text       
+     Set_U                                     C5DF      4B      75       1   .text       
+     Read_W                                    C62A       B      11       1   .text       
 - VARIABLES:
-     Vel                                        106       4       4       4   .bss        
-     Vel_1                                      10A       4       4       3   .bss        
-     Uk                                         10E       4       4       4   .bss        
-     Uk_1                                       112       4       4       3   .bss        
+     Vel                                        10B       4       4       4   .bss        
+     Vel_1                                      10F       4       4       3   .bss        
+     Uk                                         113       4       4       4   .bss        
+     Uk_1                                       117       4       4       3   .bss        
 MODULE:                 -- lavadora.c.o --
 - PROCEDURES:
-     main                                      C5A6      22      34       1   .text       
-     InitSystem                                C5C8      27      39       1   .text       
-     Control_Motor                             C5EF      63      99       1   .text       
+     main                                      C635      6B     107       1   .text       
+     InitSystem                                C6A0      27      39       1   .text       
+     Control_Motor                             C6C7      8F     143       1   .text       
+     Visualizacion                             C756       D      13       3   .text       
+     Control_Discreto                          C763     144     324       8   .text       
+     LeerEntrada                               C8A7       5       5       1   .text       
 - VARIABLES:
-     U                                          116       4       4       2   .bss        
-     E_ant                                      11A       4       4       2   .bss        
-     j                                          11E       1       1       4   .bss        
-     siguiente                                  121       2       2       1   .common     
-     estado                                     123       2       2       1   .common     
-     Entrada                                    125       1       1       1   .common     
-     W                                          126       4       4       3   .common     
-     W_ref                                      12A       4       4       3   .common     
-     E                                          12E       4       4       3   .common     
-     buffer                                     132     258     600       2   .common     
+     num_marcos                                 100       1       1       1   .data       
+     m                                          101       2       2       2   .data       
+     Programa                                   103       1       1       3   .data       
+     V_PROG                                     104       1       1       1   .data       
+     marco                                      11B       1       1       2   .bss        
+     U                                          11C       4       4       4   .bss        
+     E_ant                                      120       4       4       3   .bss        
+     Paso                                       124       1       1       7   .bss        
+     V_PASO                                     125       1       1       1   .bss        
+     j                                          126       1       1       3   .bss        
+     siguiente                                  129       2       2       2   .common     
+     estado                                     12B       2       2       7   .common     
+     Entrada                                    12D       1       1       3   .common     
+     W                                          12E       4       4       3   .common     
+     W_ref                                      132       4       4      11   .common     
+     E                                          136       4       4       4   .common     
+     buffer                                     13A     258     600       2   .common     
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  RTSHC08.C.o (ansifs.lib)                     0   1147      0
+  RTSHC08.C.o (ansifs.lib)                     0   1183      0
   MC9S08SV16.C.o                             133      0      0
   Start08.c.o                                  0    132      0
-  clock.c.o                                    8     67      2
+  clock.c.o                                    8    174      2
   motor.c.o                                   16     86      0
-  lavadora.c.o                               626    172      0
-  other                                      128     16      2
+  lavadora.c.o                               634    631      0
+  other                                      128     16     11
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   _PUSH_ARGS_L _ENTER_BINARY_L _ENTER_BINARY_L_RC _IDIVMOD _SPLITSIGN 
-  _IMODS_STAR08 _COPY _POP32 F_CLRK F_NANK F_INFK F_TLK F_XGKL _UNPACK_k_to_K 
-  _UNPACK_j_to_L _PACK_K_to_k F_NORMK _FADD_K_is_K_plus_L _FMUL_K_is_K_times_L 
-  _FADD_Common _FSUB_Common _FMUL_Common _FADD _FSUB _FMUL_RC Tick Get_Time 
-  Set_U Read_W main InitSystem Control_Motor 
+  _IMODS_STAR08 _COPY _POP32 _Jump_Table_Header_Offset F_CLRK F_NANK F_INFK 
+  F_TLK F_XGKL _UNPACK_k_to_K _UNPACK_j_to_L _PACK_K_to_k F_NORMK 
+  _FADD_K_is_K_plus_L _FMUL_K_is_K_times_L _FADD_Common _FSUB_Common 
+  _FMUL_Common _FADD _FSUB _FMUL_RC Tick Init_Clock Get_Time delay_until 
+  Set_Timer Time_Out Set_U Read_W main InitSystem Control_Motor Visualizacion 
+  Control_Discreto LeerEntrada 
+SECTION: ".data"
+  num_marcos m Programa V_PROG 
 SECTION: ".bss"
-  TO Active_Timer tick_counter Timer Vel Vel_1 Uk Uk_1 U E_ant j 
+  TO Active_Timer tick_counter Timer Vel Vel_1 Uk Uk_1 marco U E_ant Paso 
+  V_PASO j 
 SECTION: ".init"
   loadByte Init _Startup 
 SECTION: ".common"
@@ -654,7 +675,7 @@ OBJECT LIST SORTED BY ADDRESS
      _TPM1C4V                                    32       2       2       0   .abs_section_32
      _TPM1C5SC                                   34       1       1       0   .abs_section_34
      _TPM1C5V                                    35       2       2       0   .abs_section_35
-     _PTAD                                       38       1       1       0   .abs_section_38
+     _PTAD                                       38       1       1       1   .abs_section_38
      _PTADD                                      39       1       1       0   .abs_section_39
      _PTBD                                       3A       1       1       1   .abs_section_3a
      _PTBDD                                      3B       1       1       1   .abs_section_3b
@@ -662,25 +683,32 @@ OBJECT LIST SORTED BY ADDRESS
      _PTCDD                                      3D       1       1       0   .abs_section_3d
      _PTDD                                       3E       1       1       0   .abs_section_3e
      _PTDDD                                      3F       1       1       0   .abs_section_3f
-     TO                                         100       1       1       1   .bss        
-     Active_Timer                               101       1       1       2   .bss        
-     tick_counter                               102       2       2       4   .bss        
-     Timer                                      104       2       2       1   .bss        
-     Vel                                        106       4       4       4   .bss        
-     Vel_1                                      10A       4       4       3   .bss        
-     Uk                                         10E       4       4       4   .bss        
-     Uk_1                                       112       4       4       3   .bss        
-     U                                          116       4       4       2   .bss        
-     E_ant                                      11A       4       4       2   .bss        
-     j                                          11E       1       1       4   .bss        
-     timer_function                             11F       2       2       1   .common     
-     siguiente                                  121       2       2       1   .common     
-     estado                                     123       2       2       1   .common     
-     Entrada                                    125       1       1       1   .common     
-     W                                          126       4       4       3   .common     
-     W_ref                                      12A       4       4       3   .common     
-     E                                          12E       4       4       3   .common     
-     buffer                                     132     258     600       2   .common     
+     num_marcos                                 100       1       1       1   .data       
+     m                                          101       2       2       2   .data       
+     Programa                                   103       1       1       3   .data       
+     V_PROG                                     104       1       1       1   .data       
+     TO                                         105       1       1       3   .bss        
+     Active_Timer                               106       1       1       3   .bss        
+     tick_counter                               107       2       2       6   .bss        
+     Timer                                      109       2       2       2   .bss        
+     Vel                                        10B       4       4       4   .bss        
+     Vel_1                                      10F       4       4       3   .bss        
+     Uk                                         113       4       4       4   .bss        
+     Uk_1                                       117       4       4       3   .bss        
+     marco                                      11B       1       1       2   .bss        
+     U                                          11C       4       4       4   .bss        
+     E_ant                                      120       4       4       3   .bss        
+     Paso                                       124       1       1       7   .bss        
+     V_PASO                                     125       1       1       1   .bss        
+     j                                          126       1       1       3   .bss        
+     timer_function                             127       2       2       2   .common     
+     siguiente                                  129       2       2       2   .common     
+     estado                                     12B       2       2       7   .common     
+     Entrada                                    12D       1       1       3   .common     
+     W                                          12E       4       4       3   .common     
+     W_ref                                      132       4       4      11   .common     
+     E                                          136       4       4       4   .common     
+     buffer                                     13A     258     600       2   .common     
      _SRS                                      1800       1       1       0   .abs_section_1800
      _SBDFR                                    1801       1       1       0   .abs_section_1801
      _SOPT1                                    1802       1       1       1   .abs_section_1802
@@ -726,10 +754,10 @@ OBJECT LIST SORTED BY ADDRESS
      _RTCSC                                    185C       1       1       0   .abs_section_185c
      _RTCCNT                                   185D       1       1       0   .abs_section_185d
      _RTCMOD                                   185E       1       1       0   .abs_section_185e
-     _MTIMSC                                   1860       1       1       2   .abs_section_1860
-     _MTIMCLK                                  1861       1       1       0   .abs_section_1861
+     _MTIMSC                                   1860       1       1       3   .abs_section_1860
+     _MTIMCLK                                  1861       1       1       4   .abs_section_1861
      _MTIMCNT                                  1862       2       2       0   .abs_section_1862
-     _MTIMMOD                                  1864       2       2       0   .abs_section_1864
+     _MTIMMOD                                  1864       2       2       1   .abs_section_1864
      _SPIC1                                    1868       1       1       0   .abs_section_1868
      _SPIC2                                    1869       1       1       0   .abs_section_1869
      _SPIBR                                    186A       1       1       0   .abs_section_186a
@@ -759,31 +787,39 @@ OBJECT LIST SORTED BY ADDRESS
      _SPLITSIGN                                C14A      1C      28       1   .text       
      _IMODS_STAR08                             C166      25      37       1   .text       
      _COPY                                     C18B      30      48       2   .text       
-     _POP32                                    C1BB      1A      26       2   .text       
-     F_CLRK                                    C1D5       6       6       2   .text       
-     F_NANK                                    C1DB       6       6       2   .text       
-     F_INFK                                    C1E1       6       6       2   .text       
-     F_TLK                                     C1E7      1E      30       2   .text       
-     F_XGKL                                    C205      48      72       1   .text       
-     _UNPACK_k_to_K                            C24D      58      88       2   .text       
-     _UNPACK_j_to_L                            C2A5      58      88       2   .text       
-     _PACK_K_to_k                              C2FD      4F      79       2   .text       
-     F_NORMK                                   C34C      43      67       2   .text       
-     _FADD_K_is_K_plus_L                       C38F      B2     178       1   .text       
-     _FMUL_K_is_K_times_L                      C441      90     144       1   .text       
-     _FADD_Common                              C4D1       F      15       2   .text       
-     _FSUB_Common                              C4E0       9       9       1   .text       
-     _FMUL_Common                              C4E9       F      15       1   .text       
-     _FADD                                     C4F8       7       7       1   .text       
-     _FSUB                                     C4FF       7       7       1   .text       
-     _FMUL_RC                                  C506       7       7       2   .text       
-     Tick                                      C50D      33      51       1   .text       
-     Get_Time                                  C540      10      16       1   .text       
-     Set_U                                     C550      4B      75       1   .text       
-     Read_W                                    C59B       B      11       1   .text       
-     main                                      C5A6      22      34       1   .text       
-     InitSystem                                C5C8      27      39       1   .text       
-     Control_Motor                             C5EF      63      99       1   .text       
+     _POP32                                    C1BB      1A      26       3   .text       
+     _Jump_Table_Header_Offset                 C1D5      24      36       2   .text       
+     F_CLRK                                    C1F9       6       6       2   .text       
+     F_NANK                                    C1FF       6       6       2   .text       
+     F_INFK                                    C205       6       6       2   .text       
+     F_TLK                                     C20B      1E      30       2   .text       
+     F_XGKL                                    C229      48      72       1   .text       
+     _UNPACK_k_to_K                            C271      58      88       2   .text       
+     _UNPACK_j_to_L                            C2C9      58      88       2   .text       
+     _PACK_K_to_k                              C321      4F      79       2   .text       
+     F_NORMK                                   C370      43      67       2   .text       
+     _FADD_K_is_K_plus_L                       C3B3      B2     178       1   .text       
+     _FMUL_K_is_K_times_L                      C465      90     144       1   .text       
+     _FADD_Common                              C4F5       F      15       2   .text       
+     _FSUB_Common                              C504       9       9       1   .text       
+     _FMUL_Common                              C50D       F      15       1   .text       
+     _FADD                                     C51C       7       7       2   .text       
+     _FSUB                                     C523       7       7       2   .text       
+     _FMUL_RC                                  C52A       7       7       4   .text       
+     Tick                                      C531      33      51       1   .text       
+     Init_Clock                                C564      2E      46       1   .text       
+     Get_Time                                  C592      10      16       2   .text       
+     delay_until                               C5A2      14      20       1   .text       
+     Set_Timer                                 C5B6      25      37       1   .text       
+     Time_Out                                  C5DB       4       4       1   .text       
+     Set_U                                     C5DF      4B      75       1   .text       
+     Read_W                                    C62A       B      11       1   .text       
+     main                                      C635      6B     107       1   .text       
+     InitSystem                                C6A0      27      39       1   .text       
+     Control_Motor                             C6C7      8F     143       1   .text       
+     Visualizacion                             C756       D      13       3   .text       
+     Control_Discreto                          C763     144     324       8   .text       
+     LeerEntrada                               C8A7       5       5       1   .text       
      _Vector_6                                 FFF2       2       2       0   .abs_section_fff2
 
 *********************************************************************************************
@@ -805,38 +841,50 @@ RTSHC08.C.o (ansifs.lib):
   _LMODU _LMODU_LC _LMODU_RC _LASR _LLSR _LLSL _LCMP _LCMP_RC _PUSH_ARGS_24 
   _ENTER_BINARY_24_RC _ENTER_BINARY_24 _CMP24 _CMP24_RC _COPY_L _POP64 _STORE32 
   _STORE64 _SEXT8_32 _SEXT16_32 _CALL_STAR08 _CALL_STAR08_FAR _Jump_Table_Addr 
-  _Jump_Table_Offset _Jump_Table_Header_Addr _Jump_Table_Header_Offset 
-  _Search_Table_16_Addr _Search_Table_16_Offset _Search_Table_8_Addr 
-  _Search_Table_8_Offset _PUSH_CC _POP_CC _CONV_FAR_TO_NEAR _CONV_FAR_TO_LINEAR 
-  _CONV_LINEAR_TO_FAR F_CLRK_Unary F_INFK_Unary _UNPACK_k_to_K_Unary 
-  _PACK_K_to_k_Unary _FDIV_K_is_L_div_K _F_LONGK _F_FLOATK _FCMP_k_rel_j 
-  _FDIV_Common _FADD_RC _FSUB_RC _FSUB_LC _FMUL _FDIV _FDIV_RC _FDIV_LC 
-  _FSTRUNC _FUTRUNC _FNEG _FABS _FCMP _FCMP_RC _FINC _FDEC _FSFLOAT _FUFLOAT 
-  D_TLK D_TLRes D_TKRes D_XGKL D_CLRK D_CLRK_Unary D_NANK D_NANK_Unary D_INFK 
-  D_INFK_Unary _DUNPACK_k_to_K _DUNPACK_k_to_K_Unary _DUNPACK_j_to_L 
-  _DPACK_K_to_k _DPACK_K_to_k_Unary D_NORMK_Unary D_NORMK _DADD_K_is_K_plus_L 
-  _DMUL_K_is_K_times_L _DDIV_K_is_L_div_K _DCMP_k_rel_j _D_FLOATK _D_LONGK 
-  _D_FTODK _D_DTOFK _DADD_Common _DSUB_Common _DMUL_Common _DDIV_Common _DADD 
-  _DADD_RC _DSUB _DSUB_RC _DSUB_LC _DMUL _DMUL_RC _DDIV _DDIV_LC _DDIV_RC _DCMP 
-  _DCMP_RC _DINC _DDEC _DNEG _DABS _DSFLOAT _DUFLOAT _DSTRUNC _DUTRUNC _DSHORT 
-  _DLONG 
+  _Jump_Table_Offset _Jump_Table_Header_Addr _Search_Table_16_Addr 
+  _Search_Table_16_Offset _Search_Table_8_Addr _Search_Table_8_Offset _PUSH_CC 
+  _POP_CC _CONV_FAR_TO_NEAR _CONV_FAR_TO_LINEAR _CONV_LINEAR_TO_FAR 
+  F_CLRK_Unary F_INFK_Unary _UNPACK_k_to_K_Unary _PACK_K_to_k_Unary 
+  _FDIV_K_is_L_div_K _F_LONGK _F_FLOATK _FCMP_k_rel_j _FDIV_Common _FADD_RC 
+  _FSUB_RC _FSUB_LC _FMUL _FDIV _FDIV_RC _FDIV_LC _FSTRUNC _FUTRUNC _FNEG _FABS 
+  _FCMP _FCMP_RC _FINC _FDEC _FSFLOAT _FUFLOAT D_TLK D_TLRes D_TKRes D_XGKL 
+  D_CLRK D_CLRK_Unary D_NANK D_NANK_Unary D_INFK D_INFK_Unary _DUNPACK_k_to_K 
+  _DUNPACK_k_to_K_Unary _DUNPACK_j_to_L _DPACK_K_to_k _DPACK_K_to_k_Unary 
+  D_NORMK_Unary D_NORMK _DADD_K_is_K_plus_L _DMUL_K_is_K_times_L 
+  _DDIV_K_is_L_div_K _DCMP_k_rel_j _D_FLOATK _D_LONGK _D_FTODK _D_DTOFK 
+  _DADD_Common _DSUB_Common _DMUL_Common _DDIV_Common _DADD _DADD_RC _DSUB 
+  _DSUB_RC _DSUB_LC _DMUL _DMUL_RC _DDIV _DDIV_LC _DDIV_RC _DCMP _DCMP_RC _DINC 
+  _DDEC _DNEG _DABS _DSFLOAT _DUFLOAT _DSTRUNC _DUTRUNC _DSHORT _DLONG 
 clock.c.o:
-  Init_Clock Start_Clock Stop_Clock delay_until Set_Timer Time_Out 
-  Remove_Timer 
+  Start_Clock Stop_Clock Remove_Timer 
 motor.c.o:
   Init_Motor 
-lavadora.c.o:
-  Visualizacion Control_Discreto LeerEntrada 
 NOT USED VARIABLES
 RTSHC08.C.o (ansifs.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 plus1 minus1 plus1d minus1d errno 
-lavadora.c.o:
-  num_marcos Programa V_PROG marco m Paso V_PASO 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC652 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC8AC ---- SIZE       4 ---
+Filling bytes inserted
+ 00050100
+------- ROM-ADDRESS: 0xC8B0 ---- RAM-ADDRESS: 0x100 ---- SIZE       1 ---
+Name of initialized Object : num_marcos
+ 0A
+------- ROM-ADDRESS: 0xC8B1 ---- SIZE       1 ---
+Filling bytes inserted
+ 00
+------- ROM-ADDRESS: 0xC8B2 ---- RAM-ADDRESS: 0x102 ---- SIZE       1 ---
+Name of initialized Object : m:1
+ 0A
+------- ROM-ADDRESS: 0xC8B3 ---- RAM-ADDRESS: 0x103 ---- SIZE       1 ---
+Name of initialized Object : Programa
+ 01
+------- ROM-ADDRESS: 0xC8B4 ---- RAM-ADDRESS: 0x104 ---- SIZE       1 ---
+Name of initialized Object : V_PROG
+ 01
+------- ROM-ADDRESS: 0xC8B5 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -862,14 +910,24 @@ _FSUB                     USES _ENTER_BINARY_L _FSUB_Common
 _FMUL_RC                  USES _ENTER_BINARY_L_RC _FMUL_Common 
 Tick                      USES _MTIMSC tick_counter Active_Timer Timer TO 
                                 timer_function 
+Init_Clock                USES tick_counter _MTIMCLK _MTIMMOD _MTIMSC 
 Get_Time                  USES tick_counter 
+delay_until               USES tick_counter 
+Set_Timer                 USES Get_Time Timer timer_function TO Active_Timer 
+Time_Out                  USES TO 
 Set_U                     USES Uk Vel_1 _FMUL_RC Uk_1 _FADD Vel _POP32 
 Read_W                    USES Vel _COPY 
-main                      USES InitSystem j W_ref estado Get_Time siguiente 
-                                Entrada Control_Motor 
+main                      USES InitSystem Init_Clock W_ref estado Get_Time 
+                                siguiente marco num_marcos _Jump_Table_Header_Offset 
+                                Visualizacion Control_Motor Control_Discreto m delay_until 
 InitSystem                USES _ICSTRM _ICSC2 _SOPT1 _PTBD _PTBDD 
 Control_Motor             USES W Read_W j buffer _COPY _IMODS_STAR08 W_ref 
-                                _FSUB E _POP32 U Set_U E_ant 
+                                _FSUB E _POP32 _FMUL_RC U _FADD E_ant Set_U 
+Visualizacion             USES Programa V_PROG Paso V_PASO 
+Control_Discreto          USES LeerEntrada Entrada estado 
+                                _Jump_Table_Header_Offset Control_Discreto Programa W_ref Paso Set_Timer 
+                                Time_Out 
+LeerEntrada               USES _PTAD 
 _Vector_6                 USES Tick 
 
 *********************************************************************************************
@@ -881,90 +939,114 @@ DEPENDENCY TREE
  |  | 
  |  +- InitSystem          
  |  |    
+ |  +- Init_Clock          
+ |  |    
  |  +- Get_Time            
  |  |    
+ |  +- _Jump_Table_Header_Offset
+ |  |    
+ |  +- Visualizacion       
+ |  |    
  |  +- Control_Motor       
- |     | 
- |     +- Read_W              
- |     |  | 
- |     |  +- _COPY               
- |     |       
- |     +- _COPY                (see above)
- |     |  
- |     +- _IMODS_STAR08       
- |     |  | 
- |     |  +- _SPLITSIGN          
- |     |     | 
- |     |     +- _IDIVMOD            
- |     |          
- |     +- _FSUB               
- |     |  | 
- |     |  +- _ENTER_BINARY_L     
- |     |  |  | 
- |     |  |  +- _PUSH_ARGS_L        
- |     |  |       
- |     |  +- _FSUB_Common        
- |     |     | 
- |     |     +- _FADD_Common        
- |     |        | 
- |     |        +- _UNPACK_k_to_K      
- |     |        |    
- |     |        +- _UNPACK_j_to_L      
- |     |        |    
- |     |        +- _FADD_K_is_K_plus_L 
- |     |        |  | 
- |     |        |  +- F_NANK              
- |     |        |  |    
- |     |        |  +- F_TLK               
- |     |        |  |    
- |     |        |  +- F_XGKL              
- |     |        |       
- |     |        +- F_NORMK             
- |     |        |  | 
- |     |        |  +- F_CLRK              
- |     |        |  |    
- |     |        |  +- F_INFK              
- |     |        |       
- |     |        +- _PACK_K_to_k        
- |     |             
- |     +- _POP32              
- |     |    
- |     +- Set_U               
- |        | 
- |        +- _FMUL_RC            
- |        |  | 
- |        |  +- _ENTER_BINARY_L_RC  
- |        |  |  | 
- |        |  |  +- _PUSH_ARGS_L         (see above)
- |        |  |     
- |        |  +- _FMUL_Common        
- |        |     | 
- |        |     +- _UNPACK_k_to_K       (see above)
- |        |     |  
- |        |     +- _UNPACK_j_to_L       (see above)
- |        |     |  
- |        |     +- _FMUL_K_is_K_times_L
- |        |     |  | 
- |        |     |  +- F_CLRK               (see above)
- |        |     |  |  
- |        |     |  +- F_NANK               (see above)
- |        |     |  |  
- |        |     |  +- F_INFK               (see above)
- |        |     |  |  
- |        |     |  +- F_TLK                (see above)
- |        |     |     
- |        |     +- F_NORMK              (see above)
- |        |     |  
- |        |     +- _PACK_K_to_k         (see above)
- |        |        
- |        +- _FADD               
- |        |  | 
- |        |  +- _ENTER_BINARY_L      (see above)
- |        |  |  
- |        |  +- _FADD_Common         (see above)
- |        |     
- |        +- _POP32               (see above)
- |           
+ |  |  | 
+ |  |  +- Read_W              
+ |  |  |  | 
+ |  |  |  +- _COPY               
+ |  |  |       
+ |  |  +- _COPY                (see above)
+ |  |  |  
+ |  |  +- _IMODS_STAR08       
+ |  |  |  | 
+ |  |  |  +- _SPLITSIGN          
+ |  |  |     | 
+ |  |  |     +- _IDIVMOD            
+ |  |  |          
+ |  |  +- _FSUB               
+ |  |  |  | 
+ |  |  |  +- _ENTER_BINARY_L     
+ |  |  |  |  | 
+ |  |  |  |  +- _PUSH_ARGS_L        
+ |  |  |  |       
+ |  |  |  +- _FSUB_Common        
+ |  |  |     | 
+ |  |  |     +- _FADD_Common        
+ |  |  |        | 
+ |  |  |        +- _UNPACK_k_to_K      
+ |  |  |        |    
+ |  |  |        +- _UNPACK_j_to_L      
+ |  |  |        |    
+ |  |  |        +- _FADD_K_is_K_plus_L 
+ |  |  |        |  | 
+ |  |  |        |  +- F_NANK              
+ |  |  |        |  |    
+ |  |  |        |  +- F_TLK               
+ |  |  |        |  |    
+ |  |  |        |  +- F_XGKL              
+ |  |  |        |       
+ |  |  |        +- F_NORMK             
+ |  |  |        |  | 
+ |  |  |        |  +- F_CLRK              
+ |  |  |        |  |    
+ |  |  |        |  +- F_INFK              
+ |  |  |        |       
+ |  |  |        +- _PACK_K_to_k        
+ |  |  |             
+ |  |  +- _POP32              
+ |  |  |    
+ |  |  +- _FMUL_RC            
+ |  |  |  | 
+ |  |  |  +- _ENTER_BINARY_L_RC  
+ |  |  |  |  | 
+ |  |  |  |  +- _PUSH_ARGS_L         (see above)
+ |  |  |  |     
+ |  |  |  +- _FMUL_Common        
+ |  |  |     | 
+ |  |  |     +- _UNPACK_k_to_K       (see above)
+ |  |  |     |  
+ |  |  |     +- _UNPACK_j_to_L       (see above)
+ |  |  |     |  
+ |  |  |     +- _FMUL_K_is_K_times_L
+ |  |  |     |  | 
+ |  |  |     |  +- F_CLRK               (see above)
+ |  |  |     |  |  
+ |  |  |     |  +- F_NANK               (see above)
+ |  |  |     |  |  
+ |  |  |     |  +- F_INFK               (see above)
+ |  |  |     |  |  
+ |  |  |     |  +- F_TLK                (see above)
+ |  |  |     |     
+ |  |  |     +- F_NORMK              (see above)
+ |  |  |     |  
+ |  |  |     +- _PACK_K_to_k         (see above)
+ |  |  |        
+ |  |  +- _FADD               
+ |  |  |  | 
+ |  |  |  +- _ENTER_BINARY_L      (see above)
+ |  |  |  |  
+ |  |  |  +- _FADD_Common         (see above)
+ |  |  |     
+ |  |  +- Set_U               
+ |  |     | 
+ |  |     +- _FMUL_RC             (see above)
+ |  |     |  
+ |  |     +- _FADD                (see above)
+ |  |     |  
+ |  |     +- _POP32               (see above)
+ |  |        
+ |  +- Control_Discreto    
+ |  |  | 
+ |  |  +- LeerEntrada         
+ |  |  |    
+ |  |  +- _Jump_Table_Header_Offset (see above)
+ |  |  |  
+ |  |  +- Set_Timer           
+ |  |  |  | 
+ |  |  |  +- Get_Time             (see above)
+ |  |  |     
+ |  |  +- Time_Out            
+ |  |       
+ |  +- delay_until         
+ |       
  +- _Startup            
     | 
     +- Init                
@@ -983,6 +1065,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 4
-Total size of all blocks to be downloaded: 1624
+Number of blocks to be downloaded: 5
+Total size of all blocks to be downloaded: 2235
 

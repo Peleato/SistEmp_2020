@@ -53,8 +53,8 @@ unsigned char LeerEntrada(void) ;
 *                     VARIABLES GLOBALES                          *
 *******************************************************************/
 
-unsigned char marco = 0, num_marcos = 4 ;
-unsigned int siguiente, m = 0;
+unsigned char marco = 0, num_marcos = 10;
+unsigned int siguiente, m = 10;
 
 enum {Prog1, Prog2, Prog1_5, Prog1_4, Prog1_3,
 Prog1_2, Prog1_1, Prog2_4, Prog2_3,Prog2_2, Prog2_1} estado ;
@@ -79,16 +79,27 @@ void main(void) {
  
  Init_Clock () ;
  
- j = 0 ;
  W_ref = 0;
  estado = Prog1 ;
- 
-
+ /**
+  while(1){
+  Control_Motor(); 
+  }
+ **/
  siguiente = Get_Time () ;
  while(1) {
-    marco = (marco % num_marcos)+1 
+    marco = (marco % num_marcos)+1;
     switch (marco) {
-      case 1: Visualizacion(); Control_Discreto(); Control_Motor(); break;
+      case 1: Visualizacion(); Control_Discreto(); break;
+      case 2: Visualizacion(); Control_Motor(); break;
+      case 3: Visualizacion();break;
+      case 4: Visualizacion();break;
+      case 5: Visualizacion();break;
+      case 6: Visualizacion();Control_Discreto();break;
+      case 7: Visualizacion();break;
+      case 8: Visualizacion();break;
+      case 9: Visualizacion();break;
+      case 10:Visualizacion();break;
     }
     
     siguiente += m ;
@@ -129,8 +140,8 @@ void Control_Motor (void) {
    j = (j + 1)%150 ;
 
    E = W_ref - W;
-   U = U + 0,572*E -0.286*E_ant;
-   Set_U (U) ;
+   U = U + 0.572*E -0.286*E_ant;
+   Set_U (U);
    
    E_ant = E ;
    
